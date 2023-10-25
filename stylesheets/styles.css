@@ -1,0 +1,189 @@
+  
+  .container {
+    display: grid; 
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr; 
+    grid-template-rows: 0.7fr 1.3fr 1fr 1.7fr 0.3fr; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+      "Header Header Header Header Header"
+      "infoIconText infoIconText bulkPiece bulkPiece bulkPiece"
+      "infoIconText infoIconText bulkPiece bulkPiece bulkPiece"
+      "infoIconText infoIconText bulkPiece bulkPiece bulkPiece"
+      "Footer Footer Footer Footer Footer"; 
+  }
+
+  /* Style the dropdown button */
+.dropbtn {
+  background-color: #3498db;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Style the dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+/* Style the dropdown links */
+.dropdown-content a {
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+/* Change color on hover */
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+/* Show the dropdown content when the button is clicked */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+  .Header { grid-area: Header; }
+  .Footer { grid-area: Footer; }
+  .infoIconText { grid-area: infoIconText; }
+  .bulkPiece { grid-area: bulkPiece; }
+  .Header{
+    height:150px;
+    border-bottom: 1px solid black;
+  }
+
+  html{
+    overflow:hidden;
+  }
+  body  {
+    width:100% !important;
+    padding:0px;
+  }
+  /*Header elementen */
+  .Header{
+    height:100%;
+  background-color:black;
+  display:flex;
+  justify-content: space-between;
+  text-align: center;
+  }
+
+  #headerText{
+    font-size: 40px;
+    font-weight:bold;
+    color: #17a2b8;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #topLeftLogo{
+    display:flex;
+    width:15%;
+    align-items: center;
+  }
+  .img-fluid2{
+    height:60%;
+    width:70%;
+  }
+
+  /* infoIconText elementen */
+  .infoIconText{
+    background-color: lightslategray;
+    display:flex;
+  }
+
+  .row{
+    padding:10px;
+  }
+
+  #textEven{
+  max-width: 70% !important;
+  flex: 0 0 70% !important;
+  }
+  #imgEven{
+    max-width: 30% !important;
+    flex: 0 0 30% !important;
+    }
+
+  #text1{
+    font-size:20px;
+    font-weight: bold;
+  }
+
+  /* bulkPiece elementen */
+  .bulkPiece{
+    height:100%;
+    background:lightslategray;
+    display:flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  button{
+    width:95% !important;
+    margin-right:10px !important;
+  }
+  .bulkMain{
+    flex:1;
+    padding-left:30px;
+    padding-right:30px;
+  }
+  .btn-primary{
+    padding:20px;
+    height:10%;
+  }
+  .btn-success{
+    padding:20px;
+    height:10%;
+  }
+  .btn-info{
+    padding:20px;
+    height:10%;
+  }
+
+  /* Footer elementen */
+  .Footer{
+    height:100%;
+    background-color: black;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    color: #17a2b8;
+  }
+
+  #iconStrip{
+    flex:1;
+    margin-left:20px;
+  }
+  
+
+
+  /* for login element */
+          /* Styles for the popup */
+          .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+        }
+
+        /* Styles for the overlay background */
+        .overlay {
+            display: none !important;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+

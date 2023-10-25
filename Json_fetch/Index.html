@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="script.js"></script>
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            Height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Voeg een paragraaf toe om het Nederlandse woord weer te geven -->
+
+
+    <!-- Voeg een inputveld toe voor het invoeren van het Engelse woord -->
+    <div class="container">
+        <p>
+        <p id="currentWord"></p><span id="equals">&nbsp;&nbsp;=&nbsp;&nbsp;</span><input type="text" id="englishInput"
+            placeholder="Voer Engels woord in" autofocus></p>
+
+        <!-- Voeg een knop toe om te controleren -->
+        <button id="button1" onclick="checkTranslation()">Controleer</button>
+    </div>
+
+    <!-- Voeg een paragraaf toe om het resultaat weer te geven -->
+    <p id="result"></p>
+
+
+</body>
+<script>
+    let currentIndex = 0;
+    let dutchWords = []; // Nederlandse woorden
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.keyCode === 13) {
+            // Trigger a click on your button here
+            document.getElementById('button1').click();
+        }
+    });
+
+    async function fetchDutchWords() {
+        try {
+            const response = await fetch('dutch.php');
+            if (!response.ok) {
+                throw new Error('Failed to fetch Dutch words');
+            }
+            dutchWords = await response.json();
+            if (dutchWords && dutchWords.length > 0) {
+                displayCurrentWord(); // Laat het eerste Nederlandse woord zien
+            } else {
+                document.getElementById('currentWord').innerText = 'Geen Nederlandse woorden gevonden';
+            }
+        } catch (error) {
+            console.error('Error fetching Dutch words:', error);
+        }
+    }
+
+    function displayCurrentWord() {
+        const currentDutchWord = dutchWords[currentIndex];
+        document.getElementById('currentWord').innerText = currentDutchWord;
+    }
+
+    function checkTranslation() {
+        const currentDutchWord = dutchWords[currentIndex];
+        const englishInput = document.getElementById('englishInput').value.trim();
+
+        if (!englishInput) {
+            alert('Voer een Engels woord in.');
+            return;
+        }
+
+        function clearAndFocus() {
+            document.getElementById('englishInput').value = "";
+            document.getElementById('englishInput').focus();
+        }
+
+
+
+        // Stuur het Nederlandse en Engelse woord naar de server door een fetch te gebruiken
+        fetch('english.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ dutchWord: currentDutchWord, englishWord: englishInput })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                // Data wordt teruggegeven
+                return response.json();
+            })
+            .then(data => {
+                // Correct is standaard False
+                if (data.correct) {
+                    document.getElementById('result').innerText = 'Goed';
+                    clearAndFocus();
+                    currentIndex++;
+
+
+                } else {
+                    clearAndFocus();
+                    document.getElementById('result').innerText = 'Niet goed';
+                }
+
+                // Incrementeer de index met 1 om het volgende woord te tonen
+
+
+                if (currentIndex < dutchWords.length) {
+                    // Zorgt ervoor dat het altijd een nieuw woord moet weergeven
+                    displayCurrentWord();
+                } else {
+                    document.getElementById('currentWord').innerText = 'Goed gedaan!';
+
+                    // Verberg het invoerveld en het resultaatveld als er geen woorden meer zijn
+                    document.getElementById('englishInput').style.display = 'none'; // Verberg het invoerveld
+                    document.getElementById('button1').style.display = 'none'; // Verberg het invoerveld
+                    document.getElementById('equals').style.display = 'none'; // Verberg het invoerveld
+                    document.getElementById('result').innerText = '';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }
+
+    // Wacht tot de pagina is geladen om de Nederlandse woorden op te halen
+    window.onload = function () {
+        fetchDutchWords();
+    };
+</script>
+
+
+
+</html>
